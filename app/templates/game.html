@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* CSS để căn giữa khu vực game */
+        main.container {
+            max-width: 960px;
+        }
+        #game-area {
+            color: #ecf0f1;
+            margin-top: 20px;
+        }
+        /* (Bạn có thể di chuyển CSS cho game-area từ lobby.html sang đây) */
+        .leaderboard {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(0,0,0,0.2);
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .leaderboard h4 { font-size: 1.2rem; }
+        .leaderboard span { font-size: 1.5rem; font-weight: bold; color: #f1c40f; }
+        .controls { margin: 20px 0; }
+        #message { font-size: 1.1rem; font-style: italic; }
+        #prediction-display { color: #f1c40f; font-weight: bold; margin-top: 10px; height: 20px; }
+        #chat-container { background: rgba(0,0,0,0.2); border-radius: 5px; padding: 10px; height: 100%; }
+        #chat-box { height: 250px; overflow-y: scroll; border: 1px solid rgba(255,255,255,0.1); padding: 5px; margin-bottom: 10px; background: rgba(255,255,255,0.9); color: #333; }
+        #chat-box p { margin-bottom: 5px; border-bottom: 1px dashed #eee; word-wrap: break-word; }
+        #chat-input { width: 70%; margin-right: 5px; }
+        #send-chat-btn { width: 25%; }
+        .controls-disabled { opacity: 0.5; pointer-events: none; }
+
+        /* === YÊU CẦU CỦA BẠN ĐÃ ĐƯỢC THÊM TẠI ĐÂY === */
+        #game-status { font-weight: bold !important; }
+
+    </style>
+{% endblock css %}
+
+{% block content %}
+
+<div id="game-area">
+    <div class="row">
+        <div class="col-md-8">
+            <h2 id="game-status" class="text-center">Đang chờ người chơi 2...</h2>
+            <div class="leaderboard">
+                 <div class="player1 text-center">
+                    <h4 class="name1" id="player1_name_display">Player1 :</h4>
+                    <span id="player1_score">0</span>
+                </div>
+                <div class="player2 text-center">
+                    <h4 class="name2" id="player2_name_display">Player2:</h4>
+                    <span id="player2_score">0</span>
+                </div>
+            </div>
+            <div class="controls text-center" id="game-controls">
+                <button type="submit" id="rock" class="btn btn-primary btn-lg">Rock</button>
+                <button type="submit" id="paper" class="btn btn-info btn-lg">Paper</button>
+                <button type="submit" id="scissor" class="btn btn-danger btn-lg">Scissor</button>
+            </div>
+            <div id="message" class="mt-3 text-center">...</div>
+            <p id="prediction-display" class="text-center">🤖 AI Gợi Ý: ...</p>
+            <div class="Leave mt-4 text-center">
+                <button type="submit" id="leave_room_btn" class="btn btn-warning">Leave Room</button>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div id="chat-container">
+                 <h3 class="text-center">Chat</h3>
+                <div id="chat-box">
+                    <p><em>Chào mừng!</em></p>
+                </div>
+                <form id="chat-form" class="d-flex">
+                    <input type="text" id="chat-input" class="form-control" placeholder="Nhập tin nhắn...">
+                    <button id="send-chat-btn" class="btn btn-success">Gửi</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+
+{% block scripts %}
+    <script type="text/javascript">
+        // Biến 'username' này sẽ được truyền từ route Python
+        const username = `{{ username }}`;
+    </script>
+    <script src="{{ url_for('static', filename='socketio.js') }}"></script>
+{% endblock scripts %}

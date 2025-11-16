@@ -1,0 +1,129 @@
+/* static/css/single.css */
+
+.single-game-container {
+    color: #ecf0f1;
+    text-align: center;
+    padding-top: 30px;
+    width: 100%;
+}
+
+.single-game-container h1,
+.single-game-container h2 {
+    color: white;
+}
+
+.scoreboard {
+    /* SỬA MÀU: Viền trắng cổ điển */
+    border: 3px solid white;
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 32px;
+    position: relative;
+    border-radius: 8px;
+    /* SỬA MÀU: Nền trắng mờ */
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.scoreboard-label {
+    position: absolute;
+    top: -15px;
+    font-size: 16px;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    padding: 0 10px;
+    color: white;
+}
+#user-label { left: 40px; }
+#comp-label { right: 40px; }
+
+.message-container {
+    margin: 30px 0;
+    height: 60px;
+}
+#resultMessage {
+    font-size: 22px;
+    font-weight: bold;
+    /* SỬA MÀU: Màu Vàng (Sunflower) */
+    color: #F1C40F;
+}
+#prediction-display {
+    font-size: 18px;
+    color: #bdc3c7;
+    margin-top: 10px;
+}
+
+.choices {
+    margin: 40px 0;
+}
+.choice {
+    display: inline-block;
+    /* SỬA MÀU: Viền trắng */
+    border: 4px solid white;
+    border-radius: 50%;
+    padding: 30px;
+    margin: 0 15px;
+    font-size: 48px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    /* SỬA MÀU: Nền trắng mờ */
+    background: rgba(255, 255, 255, 0.1);
+}
+.choice:hover {
+    /* SỬA MÀU: Hover viền vàng, nền vàng mờ */
+    background-color: rgba(241, 196, 15, 0.1);
+    border-color: #F1C40F;
+}
+
+/* SỬA MÀU: Hiệu ứng */
+.win-glow {
+    /* Thắng = Xanh lá (rõ ràng) */
+    border-color: #28a745 !important;
+    box-shadow: 0 0 20px #28a745;
+}
+.lose-glow {
+    /* Thua = Đỏ (Giữ nguyên) */
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 20px #dc3545;
+}
+.tie-glow {
+    /* Hòa = Vàng (giống màu chữ) */
+    border-color: #F1C40F !important;
+    box-shadow: 0 0 20px #F1C40F;
+}
+
+.single-game-container a {
+    /* SỬA MÀU: Link màu Vàng */
+    color: #F1C40F;
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: 20px;
+    display: inline-block;
+}
+.single-game-container a:hover {
+    /* Hover đổi sang màu trắng */
+    color: white;
+}
+
+/* CSS cho bố cục 2 cột */
+#info-sidebar {
+    /* SỬA MÀU: Viền trắng mờ (dung hòa) */
+    border-left: 2px solid rgba(255, 255, 255, 0.2);
+    padding-left: 15px;
+}
+
+@media (max-width: 767px) {
+    #info-sidebar {
+        border-left: none;
+        /* SỬA MÀU: Viền trắng mờ */
+        border-top: 2px solid rgba(255, 255, 255, 0.2);
+        margin-top: 30px;
+        padding-top: 20px;
+        padding-left: 0;
+    }
+    .choice {
+         padding: 20px;
+         font-size: 40px;
+         margin: 0 10px;
+    }
+}

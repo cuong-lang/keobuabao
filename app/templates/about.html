@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+
+{% block css %}
+<style>
+    /* Biến container thành một thẻ "kính mờ" */
+    main.container {
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 18px;
+        padding: 30px;
+        color: #ecf0f1; /* Đổi chữ mặc định thành màu sáng */
+    }
+    h1, h3 {
+        color: #ffffff !important; /* Đổi tiêu đề thành màu trắng */
+    }
+    .Instructions {
+        color: #ecf0f1 !important; /* Ghi đè inline style cũ */
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+    /* Đảm bảo các mục con cũng có màu sáng */
+    .Instructions ul li,
+    .Instructions ul ul li {
+        color: #ecf0f1;
+        margin-top: 10px; /* Thêm khoảng cách cho dễ đọc */
+    }
+    hr {
+        background-color: rgba(255, 255, 255, 0.2); /* Đường kẻ mờ */
+    }
+</style>
+{% endblock css %}
+
+{% block content %}
+    <h1 class="text-center">Về Trò Chơi Này</h1>
+
+    <div class="Instructions">
+        <p>Chào mừng bạn đến với Rock, Paper, Scissors!</p>
+
+        <p>Đây không chỉ là một trò chơi may rủi đơn thuần. Ứng dụng này cho phép bạn trải nghiệm Kéo Búa Bao theo <strong>nhiều chế độ độc đáo</strong>:</p>
+
+        <ul style="margin-top: 15px; margin-bottom: 15px; list-style-type: disc; padding-left: 30px;">
+
+            <li><strong>Đấu PvP Tiêu Chuẩn:</strong> Vào <strong>Sảnh chờ (Lobby)</strong>, bạn có thể tạo phòng riêng (có mật khẩu), tìm trận nhanh (Quick Match), hoặc vào xem (Spectate) trận đấu của người khác.</li>
+
+            <li><strong>Chơi Đơn (vs. AI):</strong> Luyện tập với một Bot ngẫu nhiên. Điểm đặc biệt là bạn sẽ có một <strong>"Trợ lý AI"</strong>, nó sẽ phân tích thói quen của bạn và <strong>gợi ý</strong> nước đi cho lượt tiếp theo!</li>
+
+            <li><strong>🎲 Bầu Cua 6 Cửa:</strong> Một biến thể Kéo-Búa-Bao kiểu Bầu Cua. Thay vì 6 linh vật, bạn sẽ đặt cược vào 6 tổ hợp xúc xắc (✊✊, ✋✋, ✌️✌️, ✊✋, ✊✌️, ✋✌️). Đặt cược và quay số cùng nhiều người chơi!</li>
+
+            <li><strong>🎴 Chế Độ Tử Cấm:</strong> Game sinh tồn! Tất cả người chơi cược 10v. Mỗi vòng, một lá bài bị cấm. Ai chọn lá bài đó (hoặc không chọn) sẽ bị loại. Sống sót qua 5 vòng để nhận 100v, hoặc 10 vòng để nhận 1000v.</li>
+
+            <li><strong>🃏 Oẳn Tù Tì (Thẻ Bài):</strong> Chế độ chơi chiến thuật. Mỗi người có 6 thẻ (2 Kéo, 2 Búa, 2 Bao). Bạn phải dùng hết 6 thẻ của mình. Ai thắng nhiều vòng hơn khi hết thẻ sẽ là người chiến thắng chung cuộc.</li>
+
+        </ul>
+        <hr>
+        <h3 class="text-center">Quy tắc chơi (Cơ bản)</h3>
+        <p>Quy tắc rất đơn giản, mục tiêu của bạn là chọn nước đi để thắng đối thủ:</p>
+
+        <ul style="list-style-type: none; padding-left: 0; font-size: 1.2rem;" class="text-center">
+            <li>✊ Búa thắng ✌️ Kéo</li>
+            <li>✌️ Kéo thắng ✋ Bao</li>
+            <li>✋ Bao thắng ✊ Búa</li>
+        </ul>
+
+        <br>
+        <p class="text-center">Chúc bạn chơi vui vẻ và leo rank thành công trên <strong>Bảng Xếp Hạng</strong>!</p>
+    </div>
+
+{% endblock content %}

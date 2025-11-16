@@ -1,0 +1,88 @@
+/* static/css/login.css */
+
+/* Kế thừa nền gradient từ style.css */
+
+/* Căn giữa form */
+.form-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+/* Form đăng nhập */
+.form-signin {
+    width: 100%;
+    max-width: 400px;
+    background: #ffffff;
+    padding: 30px 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    text-align: left;
+}
+
+.form-signin h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+/* Input */
+.form-signin .form-control {
+    width: 100%;
+    height: 50px;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+.form-signin .form-control:focus {
+    border-color: #6a11cb;
+    box-shadow: 0 0 8px rgba(106, 17, 203, 0.3);
+    outline: none;
+}
+
+/* Nút bấm */
+.form-signin .btn {
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.form-signin .btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 15px rgba(37, 117, 252, 0.4);
+}
+
+/* Link (Remember me, forgot, sign up) */
+.form-signin a {
+    color: #6a11cb;
+    text-decoration: none;
+}
+.form-signin a:hover {
+    text-decoration: underline;
+}
+
+/* Thông báo lỗi */
+.invalid-feedback {
+    display: block; /* Luôn hiển thị lỗi */
+    color: #e74c3c;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+.alert {
+    margin-top: 15px;
+}

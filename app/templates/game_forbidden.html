@@ -1,0 +1,179 @@
+{% extends "layout.html" %}
+
+{% block css %}
+    <style>
+        body { background: linear-gradient(135deg, #4a148c, #7b1fa2); color: white; }
+        main.container { background: transparent; box-shadow: none; padding-top: 30px; }
+        .hidden { display: none; }
+
+        /* === MỚI: BỐ CỤC 2 CỘT === */
+        .game-chat-wrapper { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; }
+        .game-content { flex: 3; min-width: 400px; }
+        .chat-sidebar { flex: 1; min-width: 250px; background: rgba(0, 0, 0, 0.25); border-radius: 10px; padding: 15px; height: 600px; display: flex; flex-direction: column; }
+        #chat-box { flex-grow: 1; background: rgba(0, 0, 0, 0.2); border-radius: 5px; padding: 10px; overflow-y: auto; margin-bottom: 10px; word-wrap: break-word; }
+        #chat-box p { margin-bottom: 8px; }
+        #chat-box em { color: #ffab00; }
+        #chat-form { display: flex; gap: 5px; }
+
+        /* === SỬA LỖI 1: ĐỒNG BỘ INPUT VỀ NỀN TỐI === */
+        #chat-input,
+        #forbidden-lobby input {
+            flex-grow: 1;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3); /* Nền tối */
+            color: #ffffff; /* Chữ trắng */
+        }
+        #chat-input::placeholder,
+        #forbidden-lobby input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        /* === KẾT THÚC SỬA LỖI 1 === */
+
+        #chat-form button { background: #2ecc71; color: white; border: none; padding: 0 15px; border-radius: 5px; cursor: pointer; }
+        #chat-form button:hover { background: #27ae60; }
+        /* === KẾT THÚC CSS CHAT === */
+
+        /* CSS Sảnh chờ */
+        #forbidden-lobby { text-align: center; max-width: 800px; margin: 0 auto; }
+        #forbidden-lobby input { max-width: 300px; margin: 0 auto 10px auto; } /* Giữ lại max-width */
+
+        .room-list-container { margin-top: 40px; background: rgba(0, 0, 0, 0.3); padding: 20px; border-radius: 10px; }
+        .room-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
+
+        /* === SỬA LỖI 2: ĐỔI MÀU NÂU SANG KÍNH MỜ (GIỐNG LOBBY) === */
+        .room-item {
+            background: rgba(255, 255, 255, 0.06); /* Nền kính mờ */
+            backdrop-filter: blur(10px);
+            color: #fff;
+            padding: 15px;
+            border-radius: 12px; /* Bo góc đẹp hơn */
+            text-decoration: none;
+            transition: transform 0.2s, background 0.2s, border-color 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.15); /* Viền kính */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .room-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1); /* Hover sáng hơn */
+            border-color: #ffab00; /* Giữ màu vàng hover */
+            text-decoration: none;
+            color: #ffab00; /* Giữ màu vàng hover */
+        }
+        /* === KẾT THÚC SỬA LỖI 2 === */
+
+        .room-item strong { font-size: 1.2rem; margin-bottom: 5px; }
+
+        /* CSS Game (Giữ nguyên) */
+        #forbidden-game-area { text-align: center; background: rgba(0,0,0,0.2); padding: 30px; border-radius: 15px; }
+        #forbidden-player-list { list-style: none; padding: 0; margin: 20px 0; }
+        #forbidden-player-list li { display: inline-block; background: rgba(255,255,255,0.1); padding: 5px 10px; margin: 5px; border-radius: 5px; transition: all 0.3s ease; }
+        #forbidden-player-list li.status-playing { border-bottom: 2px solid #27ae60; }
+        #forbidden-player-list li.status-out { background: #c0392b; text-decoration: line-through; opacity: 0.7; }
+        #forbidden-player-list li.status-stopped { background: #27ae60; font-weight: bold; }
+        #forbidden-player-list li.status-spectating { background: #7f8c8d; }
+        #forbidden-timer { font-size: 2rem; font-weight: bold; color: #ffab00; }
+        #forbidden-result-display { margin: 15px 0; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; }
+        #banned-card-reveal { font-size: 3rem; color: #e74c3c; }
+        #game-controls button { font-size: 2rem; margin: 5px; width: 100px; height: 100px; border-radius: 15px; transition: all 0.2s ease; }
+        #game-controls button:disabled { opacity: 0.5; }
+        #checkpoint-controls { margin-top: 20px; padding: 20px; border-top: 1px solid #ffab00; background: rgba(255, 171, 0, 0.1); border-radius: 10px; }
+        #checkpoint-controls button { font-size: 1.2rem; }
+
+        /* === SỬA LỖI 3: ĐỔI MÀU NÚT RỜI PHÒNG === */
+        #forbidden-leave-btn {
+            background-color: #f1c40f; /* Nút màu vàng */
+            border-color: #f1c40f;
+            color: #333; /* Chữ đen cho dễ đọc */
+            font-weight: 600;
+        }
+        #forbidden-leave-btn:hover {
+            background-color: #f39c12;
+            border-color: #f39c12;
+            color: #333;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="game-chat-wrapper">
+
+    <div class="game-content">
+
+        <div id="forbidden-lobby">
+            <h1 class="mb-4">🎴 Tử Cấm 🎴</h1>
+            <p>Tạo phòng mới hoặc chọn phòng bên dưới để tham gia.</p>
+            <div class="row d-flex justify-content-center mb-4">
+                <div class="col-md-6">
+                    <input type="text" id="forbidden-room-input" class="form-control mb-2" placeholder="Nhập mã phòng tùy ý (VD: 999)">
+                    <button id="forbidden-create-btn" class="btn btn-danger btn-lg btn-block">Tạo Phòng Mới</button>
+                </div>
+            </div>
+            <a href="{{ url_for('main.lobby_page') }}" class="btn btn-secondary">Quay về Sảnh Chính</a>
+            <div class="room-list-container">
+                <h3>📋 Danh sách phòng đang chờ</h3>
+                <div class="room-grid">
+                    {% if rooms %}
+                        {% for r_id, r_data in rooms.items() %}
+                            <a href="/game_forbidden/{{ r_id }}" class="room-item">
+                                <strong>{{ r_id }}</strong>
+                                <span><i class="fas fa-users"></i> {{ r_data['players']|length }} người chơi</span>
+                                <span style="font-size: 0.8em; color: {% if r_data.state == 'playing' %}#e74c3c{% else %}#2ecc71{% endif %}; margin-top:5px;">
+                                    {% if r_data.state == 'playing' %}Đang chơi{% else %}Đang chờ{% endif %}
+                                </span>
+                            </a>
+                        {% endfor %}
+                    {% else %}
+                        <p class="mt-3">Chưa có phòng nào được tạo. Hãy là người đầu tiên!</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div id="forbidden-game-area" class="hidden">
+            <h1 id="forbidden-status-display">Game Tử Cấm - Phòng {{ room_id }}</h1>
+            <h2 id="forbidden-timer">Đang chờ...</h2>
+
+            <button id="forbidden-start-btn" class="btn btn-success btn-lg mb-3 hidden">Bắt Đầu Game!</button>
+
+            <div>
+                <strong>Người chơi:</strong>
+                <ul id="forbidden-player-list"></ul>
+            </div>
+            <div id="forbidden-result-display" class="hidden">
+                <h3>Lá bài bị cấm là: <span id="banned-card-reveal"></span></h3>
+            </div>
+            <div id="game-controls">
+                <button id="btn-rock" class="btn btn-primary">✊</button>
+                <button id="btn-paper" class="btn btn-info">✋</button>
+                <button id="btn-scissor" class="btn btn-danger">✌️</button>
+            </div>
+            <div id="checkpoint-controls" class="hidden">
+                <h3>Bạn đã sống sót qua 5 vòng!</h3>
+                <button id="btn-stop" class="btn btn-success">Dừng lại (Nhận 100v)</button>
+                <button id="btn-continue" class="btn btn-warning">Chơi tiếp (Mục tiêu 1000v)</button>
+            </div>
+            <button id="forbidden-leave-btn" class="btn btn-secondary btn-lg mt-4">Rời Phòng (Về Sảnh)</button>
+        </div>
+
+    </div> <div class="chat-sidebar">
+        <h3><i class="fas fa-comments"></i> Chat Phòng</h3>
+        <div id="chat-box">
+            <p><em>Chào mừng bạn! Giữ lịch sự khi chat nhé.</em></p>
+        </div>
+        <form id="chat-form">
+            <input type="text" id="chat-input" placeholder="Nhập tin nhắn..." autocomplete="off" required>
+            <button type="submit">Gửi</button>
+        </form>
+    </div> </div> {% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        const username = `{{ username }}`;
+        const currentRoomId = `{{ room_id if room_id else '' }}`;
+    </script>
+    <script src="{{ url_for('static', filename='forbidden.js') }}"></script>
+{% endblock %}

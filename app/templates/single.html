@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/single.css') }}">
+
+<style>
+    /* Ghi đè lại nền trắng từ style.css,
+      ép container phải trong suốt để lộ nền tím.
+    */
+    main.container {
+        background: transparent;
+        box-shadow: none;
+        color: #ecf0f1; /* Chữ sáng (đã có trong single.css) */
+    }
+
+    /* Đảm bảo link "Quay lại" có màu (vì single.css không định dạng nó) */
+    .single-game-container a {
+        color: #F1C40F; /* Màu vàng */
+        font-weight: bold;
+    }
+    .single-game-container a:hover {
+        color: white;
+    }
+</style>
+{% endblock css %}
+
+{% block content %}
+<div class="single-game-container">
+
+    <h1 class="text-center">Chào, {{ username }}!</h1>
+    <h2 class="text-center">Kéo - Búa - Bao (vs. Bot Ngẫu Nhiên)</h2>
+
+    <div class="row align-items-center mt-4">
+
+        <div class="col-md-7 text-center">
+            <div class="choices">
+                <div class="choice" id="r"><span>✊</span></div>
+                <div class="choice" id="p"><span>✋</span></div>
+                <div class="choice" id="s"><span>✌️</span></div>
+            </div>
+        </div>
+
+        <div class="col-md-5 text-center" id="info-sidebar">
+
+            <div class="scoreboard shadow-sm">
+                <div id="user-label" class="scoreboard-label">Bạn</div>
+                <div id="comp-label" class="scoreboard-label">Bot</div>
+                <span id="user-score">0</span> : <span id="comp-score">0</span>
+            </div>
+
+            <div class="message-container">
+                <p id="resultMessage">Hãy chọn nước đi của bạn!</p>
+                <p id="prediction-display">🤖 AI Gợi Ý: Đang kết nối...</p>
+            </div>
+
+            <button id="restart-button" class="btn btn-warning mt-3">Chơi Lại (Reset Điểm & AI)</button>
+
+        </div>
+    </div>
+    <p class="mt-5 text-center"><a href="{{ url_for('main.lobby_page') }}">Quay lại Sảnh chờ</a></p>
+
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js"></script>
+<script type="text/javascript">
+    const username = `{{ username }}`;
+</script>
+<script src="{{ url_for('static', filename='functions.js') }}"></script>
+{% endblock scripts %}

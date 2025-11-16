@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/register.css') }}">
+{% endblock css %}
+
+{% block content %}
+<form class="form-register", method="POST">
+    <h1 class="h3 mb-3 font-weight-normal text-center">Please Register</h1>
+
+    {{ form.hidden_tag() }} {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ 'danger' if category == 'error' else 'info' }} mt-2" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="form-group mb-2">
+        {{ form.username.label(class="form-label") }}
+        {{ form.username(class="form-control" + (" is-invalid" if form.username.errors else "")) }}
+        {% if form.username.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.username.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="form-group mb-2">
+        {{ form.email.label(class="form-label") }}
+        {{ form.email(class="form-control" + (" is-invalid" if form.email.errors else "")) }}
+        {% if form.email.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.email.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="form-group mb-2">
+        {{ form.password.label(class="form-label") }}
+        {{ form.password(class="form-control" + (" is-invalid" if form.password.errors else "")) }}
+        {% if form.password.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.password.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="form-group mb-3">
+        {{ form.confirm_password.label(class="form-label") }}
+        {{ form.confirm_password(class="form-control" + (" is-invalid" if form.confirm_password.errors else "")) }}
+        {% if form.confirm_password.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.confirm_password.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <p><a href="{{ url_for('auth.login_page') }}" class="link-info">Already have account?</a></p>
+
+    {{ form.submit(class="btn btn-dark btn-block") }}
+
+</form>
+{% endblock content%}

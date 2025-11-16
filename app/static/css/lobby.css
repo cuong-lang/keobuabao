@@ -1,0 +1,254 @@
+/* static/css/lobby.css */
+
+/* Tổng thể: glassmorphism + ánh sáng nhẹ */
+main.container {
+    background: transparent;
+    box-shadow: none;
+    padding: 20px;
+    color: #ecf0f1;
+    max-width: 1140px;
+}
+
+.hidden { display: none; }
+
+/* --------------------------------------------
+1. KHU VỰC PVP CONTROL (Tạo – Join phòng)
+---------------------------------------------*/
+#room-management {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    padding: 28px 35px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    transition: 0.3s ease;
+}
+
+#room-management:hover {
+    box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+}
+
+#room-management h2 {
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border-bottom: 3px solid #8e44ad;
+    padding-bottom: 8px;
+    display: inline-block;
+    text-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+
+/* Nút bấm */
+#room-management .btn {
+    font-weight: 600;
+    padding: 12px 18px;
+    border-radius: 10px;
+    transition: 0.25s ease;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    border: none;
+    color: white;
+}
+
+#room-management .btn:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+/* Hiển thị Room Code */
+#room-code-display {
+    background: rgba(0, 0, 0, 0.35);
+    padding: 15px;
+    border-radius: 12px;
+    margin-top: 15px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+#room-code {
+    color: #f1c40f;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+
+/* --------------------------------------------
+2. GAME HUB – Khu vực chính
+---------------------------------------------*/
+.game-hub-header {
+    margin-top: 40px;
+    font-weight: 800;
+    text-align: center;
+    font-size: 2rem;
+    color: white;
+    border-bottom: 3px solid #8e44ad;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    text-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 28px;
+}
+
+/* Card Game kiểu premium */
+.game-card {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(14px);
+    border-radius: 20px;
+    overflow: hidden;
+    text-decoration: none;
+    color: #ecf0f1;
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    transition: 0.3s ease;
+}
+
+.game-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 14px 30px rgba(0,0,0,0.45);
+    border-color: rgba(255,255,255,0.35);
+    color: white;
+}
+
+/* Ảnh trong Card */
+.card-image {
+    height: 190px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.card-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0) 60%);
+}
+
+/* Ảnh nền (tùy chỉnh) */
+.card-image.pvp       { background-image: url('../images/rock.png'); }
+.card-image.baucua    { background-image: url('../images/bua.png'); }
+.card-image.forbidden { background-image: url('../images/keo.png'); }
+.card-image.single    { background-image: url('../images/paper.png'); }
+.card-image.cardgame  { background-image: url('../images/bao.png'); }
+
+.card-content {
+    padding: 22px;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: white;
+    text-shadow: 0 0 8px rgba(255,255,255,0.2);
+}
+
+/* === SỬA LỖI 1: TĂNG ĐỘ SÁNG CHO CHỮ MÔ TẢ === */
+.card-description {
+    font-size: 0.95rem;
+    /* Đổi từ 0.75 (hơi mờ) lên 0.9 (rõ hơn) */
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.55;
+    height: 70px;
+}
+
+
+/* --------------------------------------------
+3. GIAO DIỆN PVP TRONG TRẬN
+---------------------------------------------*/
+#game-area {
+    margin-top: 35px;
+    border-top: 2px solid rgba(255,255,255,0.2);
+    padding-top: 25px;
+}
+
+#game-area h2 {
+    color: white;
+    font-weight: 700;
+}
+
+.leaderboard {
+    display: flex;
+    justify-content: space-around;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+#prediction-display {
+    color: #f1c40f;
+    font-weight: bold;
+}
+
+#chat-container {
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 12px;
+    height: 100%;
+    backdrop-filter: blur(10px);
+}
+
+/* === SỬA LỖI 2: Đảo ngược màu Chat Box (Nền tối, chữ sáng) === */
+#chat-box {
+    height: 260px;
+    overflow-y: auto;
+    border: 1px solid rgba(255,255,255,0.1); /* Viền mờ */
+    padding: 8px;
+    margin-bottom: 12px;
+    background: rgba(0, 0, 0, 0.25); /* Nền tối */
+    color: #ecf0f1; /* Chữ sáng */
+    border-radius: 8px;
+}
+
+#chat-box p {
+    margin-bottom: 6px;
+    /* Viền mờ cho chữ sáng */
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+    padding-bottom: 3px;
+    word-wrap: break-word;
+}
+#chat-box p em {
+    color: #f1c40f; /* Giữ màu vàng cho tin nhắn hệ thống */
+}
+/* === KẾT THÚC SỬA LỖI 2 === */
+
+
+/* === SỬA LỖI 3: Thêm CSS cho Form Chat (để khớp nền tối) === */
+#chat-form {
+    display: flex;
+    gap: 8px;
+}
+
+#chat-input {
+    flex-grow: 1;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+#chat-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+#chat-form button {
+    background: #2ecc71;
+    color: white;
+    border: none;
+    padding: 0 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+#chat-form button:hover {
+    background: #27ae60;
+}
+/* === KẾT THÚC SỬA LỖI 3 === */
